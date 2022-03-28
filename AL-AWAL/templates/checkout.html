@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block body %}
+
+<section class="container">
+    <h1 class="orderSummaryTitle">ORDER SUMMARY</h1>
+    <div class="shopping-cart">
+        <div class="column-labels">
+            <label class="product-image">Image</label>
+            <label class="product-details">Product</label>
+            <label class="product-price">Price</label>
+            <label class="product-quantity">Quantity</label>
+            <label class="product-removal">Remove</label>
+            <label class="product-line-price">Total</label>
+        </div>
+
+
+
+        {% for book in books %}
+
+
+
+        <div class="product">
+            <div class="product-image">
+                <img src="{{ book.image }}">
+            </div>
+            <div class="product-details">
+                <div class="product-title">{{ book.name }}</div>
+                <p class="product-description">{{ book.description }}</p>
+            </div>
+            <div class="product-price">{{book.price}}</div>
+            <div class="product-quantity quantity" data-th="Quantity">
+                <input type="number" min="1" step="1" value={{ book.quantity }}>
+                <div class="quantity-nav">
+                    <div class="quantity-button quantity-up"
+                        onclick="incrementcart('{% url 'Home:incrementbooks' book.id %}')">+</div>
+                    <div class="quantity-button quantity-down"
+                        onclick="decremnentcart('{% url 'Home:decrementbooks' book.id %}')">-</div>
+                </div>
+            </div>
+
+            <div class="product-removal">
+                <button class="remove-product" onclick="removeFromcart('{% url 'Home:removebook' book.id %}')">
+                    <i class="fa fa-trash-o"></i>
+                </button>
+            </div>
+            <div class="product-line-price">{% widthratio book.price 1 book.quantity %}</div>
+        </div>
+
+        {% endfor %}
+
+
+
+        <div class="totals">
+            <div class="totals-item totals-item-total">
+                <label>TOTAL</label>
+                <div class="totals-value" id="cart-total">0</div>
+            </div>
+        </div>
+        <a href="{% url 'Home:payment' %}">
+            <button class="checkout" id="checkout_test">Checkout <i class="fa fa-angle-right"
+                    aria-hidden="true"></i></button>
+        </a>
+        <a href="{% url 'Home_stores:booksforsale' %}"><button class="continueShopping"><i class="fa fa-angle-left"
+                    aria-hidden="true"></i>
+                Continue Shopping</button></a>
+    </div>
+</section>
+
+{% endblock body %}

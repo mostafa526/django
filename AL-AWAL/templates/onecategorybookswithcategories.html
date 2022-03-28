@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block body %}
+
+<section class="container ">
+    <div class="row">
+        <p class="pageHeadTitleMain col-md-3">{{ specific_category.name }}</p>
+    </div>
+</section>
+
+{% for i in Subcategory %}
+
+{% if forloop.first %}
+<div class="container">
+    {% for b in book %}
+
+    {% if b.subcat is None %}
+
+    <div class="col-xs-6 col-sm-3 col-md-2 outterSpaceBookCard">
+        <a href="{% url 'Home_book:detail' specific_category.slug b.slug_book %}">
+            <div class="bookCard">
+                <div class="bookImage">
+                    <img class="img-responsive" src="{{ b.image_url }}" style="margin: auto" alt="{{ b.name }}">
+                </div>
+
+                <p class="bookName" id="bname">{{ b.name }}</p>
+                <p class="bookCode" id="bcode">ISBN &nbsp;: <span>{{ b.code }}</span></p>
+                <p class="bookPrice" id="bprice">PRICE &nbsp;:<span> {{ b.price }} TL</span></p>
+
+                <!-- <script></script> -->
+
+
+
+            </div>
+        </a>
+
+        {% if user.is_authenticated %}
+        <button class="addToCartButton" onclick="addtocart('{% url 'Home:addbook' b.id %}')">
+            <span class="btn-success">
+                <i class="fa fa-check"></i>
+                Added to cart
+            </span>
+            <span class="btn-content">Add to Cart
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            </span>
+            <span class="btn-loading">
+                <i class="fa fa-spinner fa-pulse"></i>
+            </span>
+        </button>
+        {% else %}
+        <a href="{% url 'Home:addbook' b.id %}">
+            <button class="addToCartButton" onclick="addtocart('{% url 'Home:addbook' b.id %}')">
+                <span class="btn-success">
+                    <i class="fa fa-check"></i>
+                    Added to cart
+                </span>
+                <span class="btn-content">Add to Cart
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                </span>
+                <span class="btn-loading">
+                    <i class="fa fa-spinner fa-pulse"></i>
+                </span>
+            </button>
+        </a>
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+    {% endfor %}
+</div>
+{% endif %}
+
+<section class="container ">
+    <div class="row">
+        <p class="pageHeadTitleMain subcategory col-md-2">{{ i }}</p>
+    </div>
+</section>
+
+<div class="container">
+    {% for b in book %}
+
+    {% ifequal i.name b.subcat.name %}
+
+    <div class="col-xs-6 col-sm-3 col-md-2 outterSpaceBookCard">
+        <a href="{% url 'Home_book:detail' specific_category.slug b.slug_book %}">
+            <div class="bookCard">
+                <div class="bookImage">
+                    <img class="img-responsive" src="{{ b.image_url }}" style="margin: auto" alt="{{ b.name }}">
+                </div>
+
+                <p class="bookName">{{ b.name }}</p>
+                <p class="bookCode">ISBN &nbsp;: <span>{{ b.code }}</span></p>
+                <p class="bookPrice">PRICE &nbsp;:<span> {{ b.price }} TL</span></p>
+
+            </div>
+        </a>
+
+        {% if user.is_authenticated %}
+        <button class="addToCartButton" onclick="addtocart('{% url 'Home:addbook' b.id %}')">
+            <span class="btn-success">
+                <i class="fa fa-check"></i>
+                Added to cart
+            </span>
+            <span class="btn-content">Add to Cart
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            </span>
+            <span class="btn-loading">
+                <i class="fa fa-spinner fa-pulse"></i>
+            </span>
+        </button>
+        {% else %}
+        <a href="{% url 'Home:addbook' b.id %}">
+            <button class="addToCartButton" onclick="addtocart('{% url 'Home:addbook' b.id %}')">
+                <span class="btn-success">
+                    <i class="fa fa-check"></i>
+                    Added to cart
+                </span>
+                <span class="btn-content">Add to Cart
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                </span>
+                <span class="btn-loading">
+                    <i class="fa fa-spinner fa-pulse"></i>
+                </span>
+            </button>
+        </a>
+        {% endif %}
+
+    </div>
+
+    {% endifequal %}
+
+    {% endfor %}
+</div>
+
+{% empty %}
+
+<div class="container">
+    {% for b in book %}
+
+    <div class="col-xs-6 col-sm-3 col-md-2 outterSpaceBookCard">
+        <a href="{% url 'Home_book:detail' specific_category.slug b.slug_book %}">
+            <div class="bookCard">
+                <div class="bookImage">
+                    <img class="img-responsive" src="{{ b.image_url }}" style="margin: auto" alt="{{ b.name }}">
+                </div>
+
+                <p class="bookName">{{ b.name }}</p>
+                <p class="bookCode">ISBN &nbsp;: <span>{{ b.code }}</span></p>
+                <p class="bookPrice">PRICE &nbsp;:<span> {{ b.price }} TL</span></p>
+
+            </div>
+        </a>
+
+        {% if user.is_authenticated %}
+        <button class="addToCartButton" onclick="addtocart('{% url 'Home:addbook' b.id %}')">
+            <span class="btn-success">
+                <i class="fa fa-check"></i>
+                Added to cart
+            </span>
+            <span class="btn-content">Add to Cart
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            </span>
+            <span class="btn-loading">
+                <i class="fa fa-spinner fa-pulse"></i>
+            </span>
+        </button>
+        {% else %}
+        <a href="{% url 'Home:addbook' b.id %}">
+            <button class="addToCartButton" onclick="addtocart('{% url 'Home:addbook' b.id %}')">
+                <span class="btn-success">
+                    <i class="fa fa-check"></i>
+                    Added to cart
+                </span>
+                <span class="btn-content">Add to Cart
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                </span>
+                <span class="btn-loading">
+                    <i class="fa fa-spinner fa-pulse"></i>
+                </span>
+            </button>
+        </a>
+        {% endif %}
+
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endfor %}
+
+{% endblock body %}

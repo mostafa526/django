@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+
+{% block body %}
+<div id="carousel-example-generic" class="carousel-fade carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+    </ol>
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        <div class="item  slidefirst ">
+            <div class="carousel-caption-alawal">
+                <img class="img-responsive animated fadeIn delay-1s" src="{% static 'imgs/alawalwhitelogo.png' %}">
+                <p class="animated fadeIn delay-2s">Qualified in Print books and e-learning technologies</p>
+            </div>
+        </div>
+        <div class="item  slide2 active">
+            <div class="carousel-caption-alawal">
+                <img class="img-responsive animated fadeIn delay-1s" src="{% static 'imgs/sliderIcon1.png' %}">
+                <p class="animated fadeIn delay-2s">We work with worldwide suppliers, manufacturers and publishers
+                </p>
+            </div>
+        </div>
+        <div class="item  slide3">
+            <div class="carousel-caption-alawal">
+                <img class="img-responsive animated fadeIn delay-1s" src="{% static 'imgs/sliderIcon2.png' %}">
+                <p class="animated fadeIn delay-2s">online educational content, learning management systems and
+                    interactive whiteboards</p>
+            </div>
+        </div>
+    </div>
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<section class="text-center homeAbout ">
+    <div class="container">
+        <h1 class="aboutTitle">ABOUT FIRST EDUCATION</h1>
+        <p class="aboutData">
+            First Education is qualified in Print books and e-learning technologies including but not limited to
+            online educational content.
+        </p>
+        <div class="row clientsRow text-center">
+            <div class="col-xs-6 col-md-3 educationSections american">
+                <p>AMRICAN curriculum</p>
+            </div>
+            <div class="col-xs-6 col-md-3 educationSections britsh">
+                <p>BRITSH curriculum</p>
+            </div>
+            <div class="col-xs-6 col-md-3 educationSections languageschools">
+                <p>LANGUAGE SCHOOLS</p>
+            </div>
+            <div class="col-xs-6 col-md-3 educationSections ibschools">
+                <p>IB SCHOOLS</p>
+            </div>
+        </div>
+        <a href="{% url 'Home:aboutus' %}"><button class="readmoreButton">READ MORE</button></a>
+        <!-- Remove aboutus.html, Set the URL of the ABOUT US page -->
+    </div>
+</section>
+
+
+<section class="publishersHome text-center ">
+    <div class="container text-center">
+        <h1 class="publisheraTitle">OUR PUBLISHERS</h1>
+        <p class="publishersData">
+            We work with worldwide suppliers, manufacturers and publishers to purchase and ship your school
+            procurement all in one go.
+        </p>
+        <div class="owl-carousel owl-theme ">
+
+            {% for p in Publisher %}
+
+            <div> <img class="img-responsive" src="{{ p.image_url }}" alt="{{ p.nameofsupplier }}"> </div>
+
+            {% endfor %}
+
+        </div>
+
+        <a href="{% url 'Home:publishers' %}"><button class="readmoreButton">EXPLORE OUR PUBLISHERS</button></a>
+        <!-- Remove publishers.html, Set the URL of the PUBLISHERS page -->
+
+    </div>
+</section>
+
+<section class="text-center homeAbout">
+    <div class="container">
+        <h1 class="aboutTitle">BOOKS FOR SALE</h1>
+        <p class="aboutData">
+            Al-AWAL Education is qualified in Print books and e-learning technologies including but not limited to
+            online educational content.
+        </p>
+        <div class="row clientsRow text-center">
+            <div class="col-xs-6 col-md-3 educationSections english">
+                <p>ENGLISH</p>
+
+            </div>
+            <div class="col-xs-6 col-md-3 educationSections science">
+                <p>SCIENCE</p>
+            </div>
+            <div class="col-xs-6 col-md-3 educationSections math">
+                <p>MATH</p>
+            </div>
+            <div class="col-xs-6 col-md-3 educationSections">
+                <p>AND MORE...</p>
+            </div>
+        </div>
+        <a href="{% url 'Home_stores:booksforsale' %}"><button class="readmoreButton">EXPLORE OUR BOOKS</button></a>
+        <!-- Remove booksforsale.html, Set the URL of the BOOKS FOR SALE page -->
+    </div>
+</section>
+
+<section class="text-center homeAbout specialNeedsBooksHome">
+    <div class="container">
+        <h1 class="aboutTitle">SPECIAL NEEDS EDUCATION </h1>
+        <p class="aboutData">
+            Special Education services are not only for students that have specific disabilities, but the also for
+            students with significantly high abilities, usually referred to as "gifted".
+        </p>
+        <div class="row clientsRow specialNeedsrow text-center">
+
+            <div class="col-xs-4 col-sm-4 col-md-3 educationSections autism">
+                <p>AUTISM</p>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-3 educationSections anxiety">
+                <p>ANXIETY</p>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-3 educationSections">
+                <p>AND MORE...</p>
+            </div>
+        </div>
+        <a href="{% url 'Home:specialeducation' %}"><button class="readmoreButton">READ MORE</button></a>
+        <!-- Remove specialeducation.html, Set the URL of the SPECIAL EDUCATION page -->
+    </div>
+</section>
+{% endblock body %}

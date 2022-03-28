@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block body %}
+
+
+<section class="container ">
+    <div class="row">
+        <p class="pageHeadTitleMain col-md-3">OUR PUBLISHERS</p>
+
+    </div>
+
+</section>
+<div class="container text-center">
+    {% for i in publishers %}
+
+    <div class="col-xs-6 col-md-4 col-lg-3 outterSpacePublisherCard">
+        <div class="publisherCard">
+            <img class="img-responsive" src="{{ i.image_url }}" alt="{{ i.nameofsupplier }}">
+            <p class="publisherName">{{ i.nameofsupppires }}</p>
+            <p class="publisherDescription">
+                {{ i.moreinformation }}
+            </p>
+            {% ifequal i.websitelinks none %}
+
+            <button style="cursor: not-allowed;" disabled>Visit Website</button>
+
+            {% else %}
+
+            <a href="{{ i.websitelinks }}">
+                <button>Visit Website</button>
+            </a>
+
+            {% endifequal %}
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+{% endblock body %}

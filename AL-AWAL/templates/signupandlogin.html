@@ -1,0 +1,343 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>FIRST PUBLISHER</title>
+  <!-- Bootstrap -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+
+  <link rel="icon" href="{% static 'imgs/browserIcon.png' %}" />
+  <link href="{% static 'css/owl.carousel.min.css' %}" rel="stylesheet" />
+  <link href="{% static 'css/owl.theme.default.min.css' %}" rel="stylesheet" />
+
+  <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]-->
+  <script src="{% static 'js/html5shiv.min.js' %}"></script>
+  <script src="{% static 'js/respond.min.js' %}"></script>
+  <!--[endif]-->
+
+  <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+  <script>
+    function check_login(element) {
+      $("#login_ok").hide();
+      $("#login_not").hide();
+      login = $(element).val();
+      if (login == "") {
+        return;
+      }
+      $.ajax({
+        url: $(element).attr("data-url"),
+        data: {
+          csrfmiddlewaretoken: $(element)
+            .siblings("input[name='csrfmiddlewaretoken']")
+            .val(),
+          Username: login,
+        },
+        method: "POST",
+        dataType: "json",
+        success: function (data) {
+          //console.log(data);
+          if (data.is_success) {
+            $("#login_ok").show();
+            $("#login_ok").css("color", "green");
+          } else {
+            $("#login_not").show();
+            $("#login_not").css("color", "red");
+          }
+        },
+      });
+    }
+  </script>
+
+  <script>
+    function check_login_email(element) {
+      $("#login_ok_email").hide();
+      $("#login_not_email").hide();
+      email = $(element).val();
+      if (email == "") {
+        return;
+      }
+      $.ajax({
+        url: $(element).attr("data-email"),
+        data: {
+          csrfmiddlewaretoken: $(element)
+            .siblings("input[name='csrfmiddlewaretoken']")
+            .val(),
+          Email: email,
+        },
+        method: "POST",
+        dataType: "json",
+        success: function (data) {
+          //console.log(data);
+          if (data.is_success_email) {
+            $("#login_ok_email").show();
+            $("#login_ok_email").css("color", "green");
+          } else {
+            $("#login_not_email").show();
+            $("#login_not_email").css("color", "red");
+          }
+        },
+      });
+    }
+  </script>
+
+  <script>
+    function check_login_password(element) {
+      $("#login_ok_password").hide();
+      $("#login_not_password").hide();
+      password = $(element).val();
+      if (password == "") {
+        return;
+      }
+      $.ajax({
+        url: $(element).attr("data-password"),
+        data: {
+          csrfmiddlewaretoken: $(element)
+            .siblings("input[name='csrfmiddlewaretoken']")
+            .val(),
+          Password: password,
+        },
+        method: "POST",
+        dataType: "json",
+        success: function (data) {
+          //console.log(data);
+          if (data.is_success_password) {
+            $("#login_ok_password").show();
+            $("#login_ok_password").css("color", "green");
+          } else {
+            $("#login_not_password").show();
+            $("#login_not_password").css("color", "red");
+          }
+        },
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+          data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{% url 'Home:home' %}">
+          <img class="navbarLogo" alt="Brand" src="{% static 'imgs/alawalredlogo.webp' %}">
+        </a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="{% url 'Home:home' %}">HOME</a></li>
+          <li><a href="{% url 'Home:aboutus' %}">ABOUT US</a></li>
+          <li><a href="{% url 'Home:publishers' %}">PARTNERS</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">OUR PRODUCTS
+              <span class="caret"></span></a>
+            <ul class="dropdown-menu  scrollable-menu">
+              <li><a href="{% url 'Home_stores:booksforsale' %}">All CATEGORIES</a></li>
+
+              {% for c in category %}
+
+              <li><a href="{% url 'Home_stores:booksforsale_subcategory' c.slug %}">{{c.name}}</a></li>
+
+              {% endfor %}
+
+            </ul>
+          </li>
+
+          <li><a href="{% url 'Home:contactus' %}">CONTACT US</a></li>
+          {% if user.is_authenticated %}
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              {{ user.get_username }} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="{% url 'Home:logout' %}?next={{request.path}}"><i class="fa fa-sign-out"></i>
+                  Sign-out</a></li>
+            </ul>
+          </li>
+          {% else %}
+          <li><a href="{% url 'Home:sign-up-and-log-in' %}"><i class="fa fa-user" aria-hidden="true"></i> Sign up
+              or login</a>
+          </li>
+          {% endif %}
+          <li><a href="{% url 'Home_book:checkout' %}"><span class="cartWord">CART </span><i class="fa fa-shopping-cart"
+                aria-hidden="true"></i><span class="badge"></span></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container containerlogin">
+    <div class="forms-container">
+      <div class="signin-signup">
+        <form action="{% url 'Home:sign-up-and-log-in' %}" method="POST" class="sign-in-form">
+          {% csrf_token %}
+          <h2 class="title">LOGIN</h2>
+          <div class="input-field">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <input type="text" name="Username" placeholder="Username" required />
+          </div>
+          <div class="input-field">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+            <input type="password" name="Password" placeholder="Password" required />
+          </div>
+          <a href="{% url 'Home:forget-password' %}">Forget Your Password?</a>
+          <input type="submit" value="Login" class="btnRegistration solid" name="login" />
+
+          {% if messages %} {% for m in messages %}
+          <p style="color: red; font-size: 18px">{{ m }}</p>
+          {% endfor %} {% endif %}
+        </form>
+        <form action="{% url 'Home:sign-up-and-log-in' %}" method="POST" class="sign-up-form">
+          {% csrf_token %}
+          <h2 class="title">Sign up</h2>
+          <div class="input-field">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <input type="text" name="Username" id="Username" placeholder="Username" required="True"
+              onkeyup="check_login(this);return false;" data-url="{% url 'Home:sign-up-and-log-in' %}" />
+            {% csrf_token %}
+          </div>
+
+          <div class="col-md-6 col-sm-6" style="display: none" id="login_not">
+            <span class="glyphicon glyphicon-remove"></span> Username already
+            taken.
+          </div>
+
+          <div class="input-field">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            <input type="email" name="Email" id="Email" placeholder="Email" required="True"
+              onkeyup="check_login_email(this);return false;" data-email="{% url 'Home:sign-up-and-log-in' %}" />
+            {% csrf_token %}
+          </div>
+
+          <div class="col-md-6 col-sm-6" style="display: none" id="login_not_email">
+            <span class="glyphicon glyphicon-remove"></span> Email already
+            taken.
+          </div>
+
+          <div class="input-field">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+            <input type="password" name="Password" id="Password" placeholder="Password" required="True"
+              onkeyup="check_login_password(this);return false;" data-password="{% url 'Home:sign-up-and-log-in' %}" />
+            {% csrf_token %}
+          </div>
+
+          <div class="col-md-6 col-sm-6" style="display: none" id="login_not_password">
+            <span class="glyphicon glyphicon-remove"></span> Password Short.
+          </div>
+
+          <input type="submit" class="btnRegistration" value="Sign up" name="next" onclick="myFunction()" />
+        </form>
+      </div>
+    </div>
+
+    <div class="panels-container">
+      <div class="panelRegistration left-panel">
+        <div class="content">
+          <h3>New here ?</h3>
+          <p>
+            Create a new account to explore our best collection of educational
+            books.
+          </p>
+          <button class="btnRegistration transparent" id="sign-up-btn">
+            Sign up
+          </button>
+        </div>
+        <img src="{% static 'imgs/log.svg' %}" class="image" alt="" />
+      </div>
+      <div class="panelRegistration right-panel">
+        <div class="content">
+          <h3>One of us ?</h3>
+          <p>
+            Login to your account to explore and order your collection of
+            educational books.
+          </p>
+          <button type="button" class="btnRegistration transparent" id="sign-in-btn">
+            Sign in
+          </button>
+        </div>
+        <img src="{% static 'imgs/register.svg' %}" class="image" alt="" />
+      </div>
+    </div>
+  </div>
+
+  <section class="contactsFotter">
+    <div class="container">
+      <div class="col-sm-4">
+        <p class="contactsTitle">CONTACTS</p>
+        <p class="contactsDetails">
+          <i class="fa fa-map-marker" aria-hidden="true"></i>
+          {{ footer.address }}
+        </p>
+        <p class="contactsDetails">
+          <i class="fa fa-phone" aria-hidden="true"></i>
+          {{ footer.phone }}
+        </p>
+        <p class="contactsDetails">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+          {{ footer.email }}
+        </p>
+        <p class="contactsDetails">
+          <i class="fa fa-mobile" aria-hidden="true"></i>
+          {{ footer.mobile }}
+        </p>
+      </div>
+      <div class="col-sm-4 text-center followUs">
+        <img class="img-responsive" src="{% static 'imgs/alawalwhitelogo.png' %}" />
+        <p>FOLLOW US</p>
+        <a href="{{ footer.facebook_link }}"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+        <a href="{{ footer.instgram_link }}"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
+        <a href="{{ footer.website_link }}"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+      </div>
+
+      <div class="col-sm-4">
+        <p class="contactsTitle">SITE MAP</p>
+        <a class="contactsDetails" href="{% url 'Home:home' %}">HOME</a>
+        <a class="contactsDetails" href="{% url 'Home:aboutus' %}">ABOUT</a>
+        <a class="contactsDetails" href="{% url 'Home:publishers' %}">PUBLISHERS</a>
+        <a class="contactsDetails" href="{% url 'Home_stores:booksforsale' %}">BOOKS FOR SALE
+        </a>
+        <a class="contactsDetails" href="{% url 'Home:specialeducation' %}">SPECIAL NEEDS EDUCATION
+        </a>
+        <a class="contactsDetails" href="{% url 'Home:contactus' %}">CONTACT US</a>
+      </div>
+    </div>
+  </section>
+
+  <a href="#" class="scrollToTop"><img class="img-responsive" src="{% static 'imgs/scrolltotop.png' %}" /></a>
+
+  <div class="loadingPage">
+    <div class="book">
+      <div class="book__page"></div>
+      <div class="book__page"></div>
+      <div class="book__page"></div>
+    </div>
+  </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="{% static 'js/jquery.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'js/app.js' %}"></script>
+  <script src="{% static 'js/formValidation1.js' %}"></script>
+</body>
+
+</html>

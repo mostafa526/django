@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block body %}
+
+
+<section class="container ">
+    <div class="row">
+        <p class="pageHeadTitleMain col-md-3">BOOKS FOR SALE</p>
+
+    </div>
+
+</section>
+<div class="container text-center">
+    {% for c in category %}
+
+    <a href="{% url 'Home_stores:booksforsale_subcategory' c.slug %}">
+        <div class="col-xs-6 col-sm-3 outterSpaceBookCard">
+            <div class="categoryLink">
+                <p class="categoryName">{{ c }}</p>
+            </div>
+        </div>
+    </a>
+
+    {% endfor %}
+</div>
+{% endblock body %}

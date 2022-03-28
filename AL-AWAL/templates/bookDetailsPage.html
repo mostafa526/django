@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block body %}
+
+<section class="container ">
+    <div class="row">
+        <p class="pageHeadTitleMain col-md-3">{{ specific_category }}</p>
+
+    </div>
+    <div class="row bookDetails">
+        <div class="col-sm-4"> <img class="img-responsive" src="{{ single_book.image_url }}"
+                alt="{{ single_book.name }}"></div>
+
+        <div class="col-sm-8">
+            <p class="bookTitle">{{ single_book.name }}</p>
+            <p class="bookQuickOverview">QUICK OVERVIEW</p>
+            <p class="bookDescription">{{ single_book.description }}</p>
+            <p class="bookISBN">ISBN: <span>{{ single_book.code }}</span></p>
+            <p class="bookPriceOneBookPage">PRICE: <span>{{ single_book.price }} TL</span></p>
+
+        </div>
+        {% if user.is_authenticated %}
+        <button class="addToCartButton" onclick="addtocart('{% url 'Home:addbook' single_book.id %}')">
+            <span class="btn-success">
+                <i class="fa fa-check"></i>
+                Added to cart
+            </span>
+            <span class="btn-content">Add to Cart
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            </span>
+            <span class="btn-loading">
+                <i class="fa fa-spinner fa-pulse"></i>
+            </span>
+        </button>
+        {% else %}
+        <a href="{% url 'Home:addbook' single_book.id %}">
+            <button class="addToCartButton" onclick="addtocart('{% url 'Home:addbook' single_book.id %}')">
+                <span class="btn-success">
+                    <i class="fa fa-check"></i>
+                    Added to cart
+                </span>
+                <span class="btn-content">Add to Cart
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                </span>
+                <span class="btn-loading">
+                    <i class="fa fa-spinner fa-pulse"></i>
+                </span>
+            </button>
+        </a>
+        {% endif %}
+    </div>
+
+
+</section>
+
+<section class="container">
+    <p class="YouMayAlsoLike">You May Also Like</p>
+    <div class="owl-carousel owl-carousell owl-theme ">
+
+        {% for s in book_similar %}
+
+
+        <div>
+            <div class=" outterSpaceBookCard">
+                <a href="{% url 'Home_book:detail' specific_category.slug s.slug_book %}">
+                    <div class="bookCard">
+                        <div class="bookImage">
+                            <img class="img-responsive" src="{{ s.image_url }}" style="margin: auto" alt="{{ s.name }}">
+                        </div>
+
+                        <p class="bookName">{{s.name}}</p>
+                        <p class="bookCode">ISBN &nbsp;: <span>{{s.code}}</span></p>
+                        <p class="bookPrice">PRICE &nbsp;: <span>{{s.price}} TL</span></p>
+
+                    </div>
+                </a>
+
+            </div>
+            {% if user.is_authenticated %}
+            <button class="addToCartButton" onclick="addtocart('{% url 'Home:addbook' s.id %}')">
+                <span class="btn-success">
+                    <i class="fa fa-check"></i>
+                    Added to cart
+                </span>
+                <span class="btn-content">Add to Cart
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                </span>
+                <span class="btn-loading">
+                    <i class="fa fa-spinner fa-pulse"></i>
+                </span>
+            </button>
+            {% else %}
+            <a href="{% url 'Home:addbook' s.id %}">
+                <button class="addToCartButton" onclick="addtocart('{% url 'Home:addbook' s.id %}')">
+                    <span class="btn-success">
+                        <i class="fa fa-check"></i>
+                        Added to cart
+                    </span>
+                    <span class="btn-content">Add to Cart
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    </span>
+                    <span class="btn-loading">
+                        <i class="fa fa-spinner fa-pulse"></i>
+                    </span>
+                </button>
+            </a>
+            {% endif %}
+        </div>
+
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+
+
+{% endblock body %}

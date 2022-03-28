@@ -1,0 +1,6 @@
+{% autoescape off %}
+Hi {{ user.username }},
+Please click on the link to Reset Your Password,
+http://{{ domain }}{% url 'Home:set-new-password' uidb64=uidb64 token=token %}
+If you think, it's not you, then just ignore this email.
+{% endautoescape %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<section class="container">
+  <div class="row">
+    <p class="pageHeadTitleMain col-md-3">Page Not Found</p>
+  </div>
+</section>
+<section>
+  <div class="container contactUsForm text-center">
+    <p class="confirmation">
+      Sorry, This page is missing or does not exist
+    </p>
+    <a href="{% url 'Home:home' %}"><button class="readmoreButton text-center">Go To Our Home Page</button></a>
+  </div>
+</section>
+
+{% endblock body %}

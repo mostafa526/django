@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<section class="container">
+  <div class="row">
+    <p class="pageHeadTitleMain col-md-3">PASSWORD RESET</p>
+  </div>
+</section>
+<section>
+  <div class="container contactUsForm text-center">
+    <p class="confirmation">
+      You have already used this link before. If you have any issue please
+      contact us
+    </p>
+
+    <a href="{% url 'Home:contactus' %}"><button class="readmoreButton text-center">CONTACT US</button></a>
+  </div>
+</section>
+
+{% endblock body %}
